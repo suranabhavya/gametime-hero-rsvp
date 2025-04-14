@@ -1,0 +1,125 @@
+@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+$primary-color: #3498db;
+$text-color: #2c3e50;
+$border-color: #ddd;
+$background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+$status-colors: (
+  'Yes': #27ae60,
+  'No': #e74c3c,
+  'Maybe': #f39c12
+);
+
+.list-container {
+  min-height: 100vh;
+  background: $background-gradient;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    color: $text-color;
+    margin: 0;
+  }
+}
+
+.back-button {
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    color: color.adjust($primary-color, $lightness: -10%);
+  }
+}
+
+.rsvp-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.rsvp-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.rsvp-info {
+  h3 {
+    margin: 0;
+    color: $text-color;
+    font-size: 1.2rem;
+  }
+
+  .email {
+    color: color.adjust($text-color, $lightness: 20%);
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+}
+
+.status-section {
+  margin-top: 1rem;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.status-button {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: color.adjust($border-color, $lightness: 5%);
+  color: color.adjust($text-color, $lightness: 20%);
+
+  &:hover {
+    background: color.adjust($border-color, $lightness: -5%);
+  }
+
+  &.active {
+    color: white;
+  }
+
+  @each $status, $color in $status-colors {
+    &.active[data-status="#{$status}"] {
+      background: $color;
+    }
+  }
+}
+
+.rsvp-meta {
+  text-align: right;
+
+  .date {
+    color: color.adjust($text-color, $lightness: 20%);
+    font-size: 0.8rem;
+    margin: 0;
+  }
+} 

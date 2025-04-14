@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #7f8c8d;
+$confirmed-color: #27ae60;
+$declined-color: #e74c3c;
+$maybe-color: #f39c12;
+$action-color: #3498db;
+$action-hover-color: #2980b9;
+$import-color: #9b59b6;
+$import-hover-color: #8e44ad;
+$white: #fff;
+$shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+$transition: all 0.3s ease;
+
+// Mixins
+@mixin card-base {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: $shadow;
+  transition: $transition;
+}
+
+@mixin hover-transform {
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Base styles
+.landing-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+// Header styles
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h1 {
+    font-size: 2.5rem;
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: $secondary-color;
+  }
+}
+
+// Stats container
+.stats-container {
+  margin-bottom: 3rem;
+
+  .stat-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    @include card-base;
+    padding: 2rem;
+    text-align: center;
+    @include hover-transform;
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label-container {
+      @include flex-center;
+      gap: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: $secondary-color;
+    }
+
+    .download-button {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: $secondary-color;
+      border-radius: 4px;
+      @include flex-center;
+      transition: $transition;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+        color: $primary-color;
+      }
+    }
+
+    // Status-specific colors
+    &.confirmed {
+      .stat-number { color: $confirmed-color; }
+      .download-button:hover { color: $confirmed-color; }
+    }
+
+    &.declined {
+      .stat-number { color: $declined-color; }
+      .download-button:hover { color: $declined-color; }
+    }
+
+    &.maybe {
+      .stat-number { color: $maybe-color; }
+      .download-button:hover { color: $maybe-color; }
+    }
+
+    &.total {
+      .stat-number { color: $primary-color; }
+      .download-button:hover { color: $primary-color; }
+    }
+  }
+}
+
+// Actions container
+.actions-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  .action-card {
+    @include card-base;
+    padding: 2rem;
+    text-align: center;
+    @include hover-transform;
+
+    h2 {
+      color: $primary-color;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: $secondary-color;
+      margin-bottom: 1.5rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .action-button {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: $action-color;
+      color: $white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: $transition;
+
+      &:hover {
+        background: $action-hover-color;
+      }
+    }
+
+    .import-button {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: $import-color;
+      color: $white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: $transition;
+      cursor: pointer;
+
+      &:hover {
+        background: $import-hover-color;
+      }
+    }
+  }
+} 

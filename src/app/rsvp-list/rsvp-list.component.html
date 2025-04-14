@@ -1,0 +1,43 @@
+<div class="list-container">
+  <header class="header">
+    <h1>All RSVPs</h1>
+    <a routerLink="/" class="back-button">← Back to Dashboard</a>
+  </header>
+
+  <div class="rsvp-list">
+    <div *ngFor="let rsvp of rsvps" class="rsvp-card">
+      <div class="rsvp-info">
+        <h3>{{ rsvp.player.name }}</h3>
+        <p class="email">{{ rsvp.player.email }}</p>
+        <div class="status-section">
+          <div class="status-buttons">
+            <button 
+              class="status-button" 
+              [class.active]="rsvp.status === 'Yes'"
+              [attr.data-status]="'Yes'"
+              (click)="updateStatus(rsvp, 'Yes')">
+              Yes
+            </button>
+            <button 
+              class="status-button" 
+              [class.active]="rsvp.status === 'No'"
+              [attr.data-status]="'No'"
+              (click)="updateStatus(rsvp, 'No')">
+              No
+            </button>
+            <button 
+              class="status-button" 
+              [class.active]="rsvp.status === 'Maybe'"
+              [attr.data-status]="'Maybe'"
+              (click)="updateStatus(rsvp, 'Maybe')">
+              Maybe
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="rsvp-meta">
+        <p class="date">{{ rsvp.updatedAt | date:'medium' }}</p>
+      </div>
+    </div>
+  </div>
+</div> 

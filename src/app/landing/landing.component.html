@@ -1,0 +1,82 @@
+<div class="landing-container">
+  <header class="header">
+    <h1>Gametime Hero RSVP Manager</h1>
+    <p class="subtitle">Manage your event RSVPs with ease</p>
+  </header>
+
+  <div class="stats-container">
+    <div class="stat-card" *ngIf="stats">
+      <div class="stat-item total">
+        <div class="stat-number">{{ stats.total }}</div>
+        <div class="stat-label-container">
+          <span class="stat-label">Total Responses</span>
+          <button class="download-button" (click)="downloadCSV('all')" title="Download all responses">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="stat-item confirmed">
+        <div class="stat-number">{{ stats.confirmed }}</div>
+        <div class="stat-label-container">
+          <span class="stat-label">Confirmed</span>
+          <button class="download-button" (click)="downloadCSV('Yes')" title="Download confirmed responses">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="stat-item declined">
+        <div class="stat-number">{{ stats.declined }}</div>
+        <div class="stat-label-container">
+          <span class="stat-label">Declined</span>
+          <button class="download-button" (click)="downloadCSV('No')" title="Download declined responses">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="stat-item maybe">
+        <div class="stat-number">{{ stats.maybe }}</div>
+        <div class="stat-label-container">
+          <span class="stat-label">Maybe</span>
+          <button class="download-button" (click)="downloadCSV('Maybe')" title="Download maybe responses">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-container">
+    <div class="action-card">
+      <h2>Add New RSVP</h2>
+      <p>Add a new player to your RSVP list</p>
+      <div class="action-buttons">
+        <a routerLink="/rsvp" class="action-button">Add RSVP</a>
+        <label class="import-button">
+          Import CSV
+          <input type="file" accept=".csv" (change)="onFileSelected($event)" style="display: none;">
+        </label>
+      </div>
+    </div>
+    <div class="action-card">
+      <h2>View All RSVPs</h2>
+      <p>See and Manage all RSVPs</p>
+      <a routerLink="/rsvp-list" class="action-button">View List</a>
+    </div>
+  </div>
+</div> 

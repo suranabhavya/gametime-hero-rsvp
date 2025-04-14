@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LandingComponent } from './landing/landing.component';
-import { RsvpListComponent } from './rsvp-list/rsvp-list.component';
 import { RsvpComponent } from './rsvp/rsvp.component';
+import { RsvpListComponent } from './rsvp-list/rsvp-list.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },

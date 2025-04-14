@@ -1,0 +1,114 @@
+@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+$primary-color: #3498db;
+$error-color: #e74c3c;
+$text-color: #2c3e50;
+$border-color: #ddd;
+$background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+.rsvp-container {
+  min-height: 100vh;
+  background: $background-gradient;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    color: $text-color;
+    margin: 0;
+  }
+}
+
+.back-button {
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    color: color.adjust($primary-color, $lightness: -10%);
+  }
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $text-color;
+    font-weight: 500;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+
+    &.error {
+      border-color: $error-color;
+    }
+  }
+}
+
+.error-message {
+  color: $error-color;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.submit-button {
+  padding: 0.8rem 2rem;
+  background: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background: color.adjust($primary-color, $lightness: -10%);
+  }
+
+  &:disabled {
+    background: color.adjust($border-color, $lightness: 10%);
+    cursor: not-allowed;
+  }
+} 

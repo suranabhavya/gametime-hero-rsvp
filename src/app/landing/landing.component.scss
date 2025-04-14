@@ -8,6 +8,8 @@ $declined-color: #e74c3c;
 $maybe-color: #f39c12;
 $action-color: #3498db;
 $action-hover-color: #2980b9;
+$import-color: #9b59b6;
+$import-hover-color: #8e44ad;
 $white: #fff;
 $shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 $transition: all 0.3s ease;
@@ -156,6 +158,12 @@ $transition: all 0.3s ease;
       margin-bottom: 1.5rem;
     }
 
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
     .action-button {
       display: inline-block;
       padding: 0.8rem 2rem;
@@ -168,6 +176,22 @@ $transition: all 0.3s ease;
 
       &:hover {
         background: $action-hover-color;
+      }
+    }
+
+    .import-button {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: $import-color;
+      color: $white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: $transition;
+      cursor: pointer;
+
+      &:hover {
+        background: $import-hover-color;
       }
     }
   }

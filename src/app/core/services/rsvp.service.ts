@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoggerService } from './logger.service';
 import { Player, RsvpEntry, RsvpStatus, RsvpStats } from '../models/rsvp.types';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,18 @@ export class RsvpService {
 
   constructor(private logger: LoggerService) {}
 
-  addOrUpdateRsvp(player: Player, status: RsvpStatus): RsvpEntry {
+  addOrUpdateRsvp(player: Omit<Player, 'id'>, status: RsvpStatus): RsvpEntry {
     const existingEntryIndex = this.rsvpEntries.findIndex(
-      entry => entry.player.id === player.id
+      entry => entry.player.email === player.email
     );
 
+    const playerWithId: Player = {
+      ...player,
+      id: existingEntryIndex >= 0 ? this.rsvpEntries[existingEntryIndex].player.id : uuidv4()
+    };
+
     const newEntry: RsvpEntry = {
-      player,
+      player: playerWithId,
       status,
       updatedAt: new Date()
     };
@@ -72,5 +78,17 @@ export class RsvpService {
 
   getAllRsvps(): RsvpEntry[] {
     return [...this.rsvpEntries];
+  }
+
+  addRsvp(rsvp: RsvpEntry): void {
+    const existingIndex = this.rsvpEntries.findIndex(r => r.player.email === rsvp.player.email);
+    if (existingIndex >= 0) {
+      this.rsvpEntries[existingIndex] = rsvp;
+    } else {
+      this.rsvpEntries.push({
+        ...rsvp,
+        player: { ...rsvp.player, id: uuidv4() }
+      });
+    }
   }
 } 

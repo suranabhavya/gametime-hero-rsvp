@@ -65,7 +65,13 @@
     <div class="action-card">
       <h2>Add New RSVP</h2>
       <p>Add a new player to your RSVP list</p>
-      <a routerLink="/rsvp" class="action-button">Add RSVP</a>
+      <div class="action-buttons">
+        <a routerLink="/rsvp" class="action-button">Add RSVP</a>
+        <label class="import-button">
+          Import CSV
+          <input type="file" accept=".csv" (change)="onFileSelected($event)" style="display: none;">
+        </label>
+      </div>
     </div>
     <div class="action-card">
       <h2>View All RSVPs</h2>

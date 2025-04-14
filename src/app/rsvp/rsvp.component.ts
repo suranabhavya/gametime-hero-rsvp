@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { RsvpService } from '../core/services/rsvp.service';
-import { Player, RsvpStatus } from '../core/models/rsvp.types';
+import { RsvpStatus } from '../core/models/rsvp.types';
 
 @Component({
   selector: 'app-rsvp',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   template: `
     <div class="rsvp-container">
       <header class="header">
@@ -18,37 +18,37 @@ import { Player, RsvpStatus } from '../core/models/rsvp.types';
 
       <div class="form-container">
         <div class="form-card">
-          <form (ngSubmit)="addRsvp()">
+          <form [formGroup]="rsvpForm" (ngSubmit)="addRsvp()">
             <div class="form-group">
               <label for="name">Player Name</label>
               <input 
                 id="name" 
-                [(ngModel)]="newPlayer.name" 
-                name="name" 
+                formControlName="name"
                 placeholder="Enter player name"
-                required
+                [class.error]="isFieldInvalid('name')"
               >
+              <div class="error-message" *ngIf="isFieldInvalid('name')">
+                Name is required
+              </div>
             </div>
 
             <div class="form-group">
               <label for="email">Player Email</label>
               <input 
                 id="email" 
-                [(ngModel)]="newPlayer.email" 
-                name="email" 
+                formControlName="email"
                 type="email"
                 placeholder="Enter player email"
-                required
+                [class.error]="isFieldInvalid('email')"
               >
+              <div class="error-message" *ngIf="isFieldInvalid('email')">
+                {{ getEmailErrorMessage() }}
+              </div>
             </div>
 
             <div class="form-group">
               <label for="status">RSVP Status</label>
-              <select 
-                id="status" 
-                [(ngModel)]="selectedStatus" 
-                name="status"
-              >
+              <select id="status" formControlName="status">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="Maybe">Maybe</option>
@@ -56,7 +56,13 @@ import { Player, RsvpStatus } from '../core/models/rsvp.types';
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="submit-button">Add RSVP</button>
+              <button 
+                type="submit" 
+                class="submit-button"
+                [disabled]="rsvpForm.invalid"
+              >
+                Add RSVP
+              </button>
             </div>
           </form>
         </div>
@@ -136,6 +142,16 @@ import { Player, RsvpStatus } from '../core/models/rsvp.types';
       border-color: #3498db;
     }
 
+    input.error {
+      border-color: #e74c3c;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
     .form-actions {
       margin-top: 2rem;
       text-align: center;
@@ -153,27 +169,59 @@ import { Player, RsvpStatus } from '../core/models/rsvp.types';
       transition: background 0.3s ease;
     }
 
-    .submit-button:hover {
+    .submit-button:hover:not(:disabled) {
       background: #2980b9;
+    }
+
+    .submit-button:disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
     }
   `]
 })
 export class RsvpComponent {
-  newPlayer: Player = { id: '', name: '', email: '' };
-  selectedStatus: RsvpStatus = 'Yes';
+  rsvpForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private rsvpService: RsvpService,
     private router: Router
-  ) {}
+  ) {
+    this.rsvpForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, this.emailValidator()]],
+      status: ['Yes']
+    });
+  }
+
+  private emailValidator() {
+    return (control: AbstractControl) => {
+      if (!control.value) return null;
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(control.value) ? null : { invalidEmail: true };
+    };
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.rsvpForm.get(fieldName);
+    return field ? (field.invalid && (field.dirty || field.touched)) : false;
+  }
+
+  getEmailErrorMessage(): string {
+    const email = this.rsvpForm.get('email');
+    if (email?.errors?.['required']) return 'Email is required';
+    if (email?.errors?.['invalidEmail']) return 'Please enter a valid email address (e.g., user@example.com)';
+    return '';
+  }
 
   addRsvp(): void {
-    if (!this.newPlayer.name || !this.newPlayer.email) return;
-    
-    this.newPlayer.id = Math.random().toString(36).substr(2, 9);
-    this.rsvpService.addOrUpdateRsvp(this.newPlayer, this.selectedStatus);
-    
-    // Redirect to landing page
+    if (this.rsvpForm.invalid) return;
+
+    const { name, email, status } = this.rsvpForm.value;
+    this.rsvpService.addOrUpdateRsvp(
+      { id: Math.random().toString(36).substr(2, 9), name, email },
+      status as RsvpStatus
+    );
     this.router.navigate(['/']);
   }
-} 
+}

@@ -69,10 +69,10 @@ Navigate to `http://localhost:4200/` in your browser to view the application.
 
 ## Screenshots
 ```markdown
-![Landing Page](./screenshots/landing.jpeg)
-![Add RSVP](./screenshots/rsvp.jpeg)
-![RSVP Validation](./screenshots/rsvp-list-validation.jpeg)
-![RSVP List](./screenshots/rsvp-list.jpeg)
+![Landing Page](./public/screenshots/landing.jpeg)
+![Add RSVP](./public/screenshots/rsvp.jpeg)
+![RSVP Validation](./public/screenshots/rsvp-list-validation.jpeg)
+![RSVP List](./public/screenshots/rsvp-list.jpeg)
 ```
 
 
